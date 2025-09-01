@@ -58,8 +58,28 @@ $config = [
             'redis' => 'redis',
             'channel' => 'queue',
         ],
+        'authManager' => [
+            'class' => \yii\rbac\DbManager::class,
+        ],
     ],
     'params' => $params,
+    'behaviors' => [
+        'access' => [
+            'class' => \yii\filters\AccessControl::class,
+            'rules' => [
+                [
+                    'actions' => ['index', 'top-authors'],
+                    'allow' => true,
+                    'roles' => ['?'],
+                ],
+                [
+                    'actions' => ['create', 'update', 'delete'],
+                    'allow' => true,
+                    'roles' => ['@'],
+                ],
+            ],
+        ],
+    ],
 ];
 
 if (YII_ENV_DEV) {
